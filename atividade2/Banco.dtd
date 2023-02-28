@@ -1,5 +1,14 @@
-<?xml version:"1.0">
-<!DOCTYPE db SYSTEM "Banco.dtd">
-<db>
-
-</db>
+<!ELEMENT Banco (Cliente*, Conta*)>
+<!ELEMENT Cliente (nome, cpf, Endereco)>
+    <!ATTLIST Cliente
+    id ID #REQUIRED>
+<!ELEMENT nome (#PCDATA)>
+<!ELEMENT cpf (#PCDATA)>
+<!ELEMENT Conta (numero, tipo, saldo)>
+    <!ATTLIST Conta
+    titular IDREFS #REQUIRED>
+<!ELEMENT numero (#PCDATA)>
+<!ELEMENT tipo (#PCDATA)>
+<!ELEMENT saldo (#PCDATA)>
+<!ELEMENT Endereco (email)>
+<!ELEMENT email (#PCDATA)>
