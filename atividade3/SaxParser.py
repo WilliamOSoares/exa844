@@ -8,10 +8,9 @@ class Listener(xml.sax.ContentHandler):
     self.lat = ""
     self.lon = ""
     self.dentroNode = False
-    self.amenity = False
-    self.name = False
     self.hasAmenity = False
-    self.hasName = False
+    self.hasNameAndAmenity = False
+    self.est=1
 
   def startElement(self, tag, attributes):   
     
@@ -19,33 +18,27 @@ class Listener(xml.sax.ContentHandler):
       self.dentroNode = True
       self.lat = attributes.get("lat")
       self.lon = attributes.get("lon")
+      self.hasAmenity = False
+      self.hasNameAndAmenity = False
     if (tag =="tag" and self.dentroNode and attributes.get("k")=="amenity"):
-      self.amenity = True
       self.hasAmenity = True
       self.tipo = attributes.get("v")
-    if (tag =="tag" and self.dentroNode and attributes.get("k")=="name"):
-      self.name = True
-      self.hasName = True
+    if (tag =="tag" and self.dentroNode and attributes.get("k")=="name" and self.hasAmenity):
+      self.hasNameAndAmenity = True
       self.nome = attributes.get("v")
-
+      
   def endElement(self, tag): 
-    print(self.hasAmenity, self.hasName, self.amenity, self.name)
-    if tag =="node" and self.hasAmenity and self.hasName:  
+    
+    if tag =="node" and self.hasAmenity and self.hasNameAndAmenity:  
       self.dentroNode = False
       self.hasAmenity = False
-      self.hasName = False
+      self.hasNameAndAmenity = False
+      print("Estabelecimento numero: ", self.est)
+      print("tipo:", self.tipo) 
+      print("nome:", self.nome)
       print("lat:", self.lat) 
       print("lon:", self.lon)
-    elif tag =="node" and not(self.hasAmenity) or not(self.hasName):
-      self.dentroNode = False
-      self.hasAmenity = False
-      self.hasName = False
-    if (tag =="tag" and self.dentroNode and self.amenity):
-      self.amenity = False
-      print("tipo:", self.tipo) 
-    if (tag =="tag" and self.dentroNode and self.name):
-      self.name = False
-      print("nome:", self.nome)
+      self.est+=1
       
 
 inicio = time.time()
@@ -55,7 +48,8 @@ Handler = Listener()
 parser.setContentHandler(Handler)
 
 print("Starting SAX Parser...")
-parser.parse("map.osm")
+parser.parse("atividade3/map.osm")
+print("Estabelecimentos encontrados: ", Handler.est)
 fim = time.time()
 print("Tempo: ", fim - inicio)
 

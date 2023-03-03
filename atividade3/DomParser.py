@@ -2,7 +2,7 @@ from pickle import FALSE, TRUE
 from xml.dom.minidom import parse
 import time
 
-mapCentroFSA = parse('map.osm')
+mapCentroFSA = parse('atividade3/map.osm')
 
 print("Starting DOM Parser...")
 print(mapCentroFSA)
@@ -11,14 +11,18 @@ est=1
 for c in mapCentroFSA.getElementsByTagName("node"):	
 	tags = c.getElementsByTagName("tag")
 	flagAmenity=False
+	flagNome=False
 	for d in tags:		
 		if(d.getAttribute("k")=="amenity"):
 			print("Estabelecimento numero: ", est)
-			print("Tipo:", d.getAttribute("v"))
+			#print("Tipo:", d.getAttribute("v"))
+			amenityTipo = d.getAttribute("v")
 			flagAmenity=True
 		if(d.getAttribute("k")=="name" and flagAmenity):
-			print("Nome:", d.getAttribute("v"))
-	if(flagAmenity):
+			flagNome=True
+	if(flagAmenity and flagNome):
+		print("Nome:", d.getAttribute("v"))
+		print("Tipo:", amenityTipo)
 		print("lat: ", c.getAttribute("lat"))
 		print("lon: ", c.getAttribute("lon"))
 		est+=1		
