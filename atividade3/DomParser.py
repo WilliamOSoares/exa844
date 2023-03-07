@@ -19,9 +19,10 @@ for c in mapCentroFSA.getElementsByTagName("node"):
 			amenityTipo = d.getAttribute("v")
 			flagAmenity=True
 		if(d.getAttribute("k")=="name" and flagAmenity):
+			nome = d.getAttribute("v")
 			flagNome=True
 	if(flagAmenity and flagNome):
-		print("Nome:", d.getAttribute("v"))
+		print("Nome:", nome)
 		print("Tipo:", amenityTipo)
 		print("lat: ", c.getAttribute("lat"))
 		print("lon: ", c.getAttribute("lon"))
