@@ -6,9 +6,7 @@ import json
 
 form = cgi.FieldStorage()
 
-inputFile = open("http://localhost:8000/cgi-bin/db.json", "r")
-
-with open("http://localhost:8000/cgi-bin/db.json") as file:
+with open("http://localhost:8000/db.json") as file:
     mensagens = json.load(file)
 
 msg = dict()
