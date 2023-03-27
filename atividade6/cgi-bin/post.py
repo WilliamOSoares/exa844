@@ -3,11 +3,12 @@
 import os, cgi
 import time
 import json
+
 form = cgi.FieldStorage()
 
-inputFile = open("atividade6/cgi-bin/db.json", "r")
+inputFile = open("http://localhost:8000/cgi-bin/db.json", "r")
 
-with open("atividade6/cgi-bin/db.json") as file:
+with open("http://localhost:8000/cgi-bin/db.json") as file:
     mensagens = json.load(file)
 
 msg = dict()
@@ -37,5 +38,5 @@ for x in range(len(mensagens["mensagens"])):
     i+=1
 print("</body></html>")
 
-with open("atividade6/cgi-bin/db.json", 'w') as file:
+with open("http://localhost:8000/cgi-bin/db.json", 'w') as file:
     json.dump(mensagens, file)
